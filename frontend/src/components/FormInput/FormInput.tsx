@@ -11,6 +11,20 @@ const FormInput = () => {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
+  const testStart = async () => {
+    // Send message to the OpenAI
+    const url = '/api/functions';
+    const response = await fetch(`${url}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('🚀 ~ createItem ~ response:', response);
+    const { result } = await response.json();
+    console.log('🚀 ~ createItem ~ result:', result);
+  };
+
   const createItem = async () => {
     // Send message to the OpenAI
     const url = '/api/cosmos/create';
@@ -87,6 +101,12 @@ const FormInput = () => {
           className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
           placeholder="Your message..."
         ></textarea>
+        <button
+          onClick={testStart}
+          className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
+        >
+          func access
+        </button>
         <button
           onClick={selectItem}
           className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
