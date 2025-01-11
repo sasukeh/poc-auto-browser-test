@@ -1,15 +1,42 @@
 'use client';
 
+import { inputMessageToReduxStore } from '@/features/messageSlice';
+import { useAppDispatch } from '@/hooks/useRTK';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { inputMessageToReduxStore } from '../../features/messageSlice';
-import { useAppDispatch } from '../../hooks/useRTK';
 
 const FormInput = () => {
   const dispatch = useAppDispatch();
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
+
+  const createItem = async () => {
+    // Send message to the OpenAI
+    const url = '/api/cosmos/create';
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const { result } = await response.json();
+    console.log('🚀 ~ createItem ~ result:', result);
+  };
+
+  const selectItem = async () => {
+    const url = '/api/cosmos/select';
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const { result } = await response.json();
+    console.log('🚀 ~ createItem ~ result:', result);
+  };
 
   const sendMessage = async () => {
     setIsLoading(true);
@@ -23,7 +50,7 @@ const FormInput = () => {
     );
 
     // Send message to the OpenAI
-    const url = '/api/rag-extra-1';
+    const url = '/api/agent';
     console.log('🚀 ~ sendMessage ~ url:', url);
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
       method: 'POST',
@@ -33,12 +60,12 @@ const FormInput = () => {
       body: JSON.stringify({ message }),
     });
 
-    const { aiMessage } = await response.json();
+    const { result } = await response.json();
     // Send OpenAI message to the redux store
     dispatch(
       inputMessageToReduxStore({
         pathname,
-        message: aiMessage,
+        message: result,
         isMan: false,
       })
     );
@@ -60,6 +87,18 @@ const FormInput = () => {
           className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
           placeholder="Your message..."
         ></textarea>
+        <button
+          onClick={selectItem}
+          className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
+        >
+          select Item
+        </button>
+        <button
+          onClick={createItem}
+          className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
+        >
+          create Item
+        </button>
         <button
           onClick={sendMessage}
           className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
