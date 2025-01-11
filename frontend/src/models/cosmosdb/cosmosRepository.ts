@@ -9,8 +9,8 @@ export class CosmosRepository {
   constructor() {
     const endpoint = process.env.DATABASE_ENDPOINT!;
     const key = process.env.DATABASE_API_KEY!;
-    const databaseId = process.env.DATABASE_NAME!;
-    const containerId = process.env.CONTAINER_NAME!;
+    const databaseId = process.env.COSMOS_DATABASE_NAME!;
+    const containerId = process.env.COSMOS_CONTAINER_NAME!;
 
     this.client = new CosmosClient({ endpoint, key });
     this.database = this.client.database(databaseId);
@@ -40,9 +40,6 @@ export class CosmosRepository {
 
   async createCosmosData() {
     return new Promise(async (resolve, reject) => {
-      console.log(
-        '🚀 ~ CosmosRepository ~ returnnewPromise ~ resolve: CosmosDB スタート'
-      );
       try {
         const chars =
           'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

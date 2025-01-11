@@ -20,7 +20,7 @@ const FormInput = () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('🚀 ~ createItem ~ response:', response.json());
+    console.log('🚀 ~ createItem ~ response:', response);
     const { result } = await response.json();
     console.log('🚀 ~ createItem ~ result:', result);
   };
