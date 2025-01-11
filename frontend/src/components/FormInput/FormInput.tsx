@@ -19,7 +19,7 @@ const FormInput = () => {
   const createItem = async () => {
     // Send message to the OpenAI
     const url = '/api/cosmos/create';
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
+    const response = await fetch(`${url}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const FormInput = () => {
 
   const selectItem = async () => {
     const url = '/api/cosmos/select';
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
+    const response = await fetch(`${url}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
