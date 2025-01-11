@@ -1,9 +1,11 @@
+import { ItemType } from '@/types/types';
 import { Container, CosmosClient, Database } from '@azure/cosmos';
 
 export class CosmosRepository {
   private container: Container;
   private database: Database;
   private client: CosmosClient;
+
   constructor() {
     const endpoint = process.env.DATABASE_ENDPOINT!;
     const key = process.env.DATABASE_API_KEY!;
@@ -14,6 +16,7 @@ export class CosmosRepository {
     this.database = this.client.database(databaseId);
     this.container = this.database.container(containerId);
   }
+
   async selectCosmosData() {
     return new Promise(async (resolve, reject) => {
       try {
@@ -45,19 +48,20 @@ export class CosmosRepository {
           'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let createId = '';
 
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 15; i++) {
           const randomIndex = Math.floor(Math.random() * chars.length);
           createId += chars.charAt(randomIndex);
         }
 
         const date = new Date().toLocaleString('sv').replace(/\D/g, '');
 
-        const newItem: any = {
+        const newItem: ItemType = {
           id: createId,
-          title: 'new title',
-          description: 'new description',
+          title: 'browser test' + date,
+          url: 'https://www.xxxxxxxxxxxxx.com',
+          result: 'No Problem',
+          isError: false,
           dueDate: date,
-          isCompleted: false,
         };
 
         const { resource: createdItem } = await this.container.items.create(
