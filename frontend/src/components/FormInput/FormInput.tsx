@@ -15,6 +15,15 @@ const FormInput = () => {
     '🚀 ~ createItem ~ process.env.NEXT_PUBLIC_URL:',
     process.env.NEXT_PUBLIC_URL
   );
+  console.log(
+    '🚀 ~ createItem ~ process.env.AZURE_OPENAI_ENDPOINT:',
+    process.env.AZURE_OPENAI_ENDPOINT
+  );
+
+  console.log(
+    '🚀 ~ createItem ~ process.env.AZURE_OPENAI_API_KEY:',
+    process.env.AZURE_OPENAI_API_KEY
+  );
   const createItem = async () => {
     // Send message to the OpenAI
     const url = '/api/cosmos/create';
