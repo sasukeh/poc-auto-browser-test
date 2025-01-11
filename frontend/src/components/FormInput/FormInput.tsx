@@ -11,11 +11,6 @@ const FormInput = () => {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
-  console.log(
-    '🚀 ~ createItem ~ process.env.NEXT_PUBLIC_URL:',
-    process.env.NEXT_PUBLIC_URL
-  );
-
   const createItem = async () => {
     // Send message to the OpenAI
     const url = '/api/cosmos/create';
@@ -25,7 +20,7 @@ const FormInput = () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log('🚀 ~ createItem ~ response:', response);
+    console.log('🚀 ~ createItem ~ response:', response.json());
     const { result } = await response.json();
     console.log('🚀 ~ createItem ~ result:', result);
   };
