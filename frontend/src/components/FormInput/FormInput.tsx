@@ -11,25 +11,19 @@ const FormInput = () => {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
+  console.log(
+    '🚀 ~ createItem ~ process.env.NEXT_PUBLIC_URL:',
+    process.env.NEXT_PUBLIC_URL
+  );
   const createItem = async () => {
     // Send message to the OpenAI
     const url = '/api/cosmos/create';
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-
-    const response = await fetch(
-      `https://func-poc-auto-browser-test.azurewebsites.net${url}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     const { result } = await response.json();
     console.log('🚀 ~ createItem ~ result:', result);
