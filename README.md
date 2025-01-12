@@ -14,4 +14,12 @@ Agent が自動でブラウザテストを実施するためのリポジトリ�
 
 ## Architecture
 
-![](https://storage.googleapis.com/zenn-user-upload/3123f13f6d76-20250111.png)
+![](https://storage.googleapis.com/zenn-user-upload/e7ec2f642a4d-20250112.png)
+
+## 動作
+
+1. User が Static Web Apps にアクセス
+2. テスト実行を依頼
+3. Azure App Service に hosting されている browser-use が指定したブラウザのテストを実行
+4. テスト結果を Azure CosmosDB へ保存
+5. Static Web Apps よりテスト結果を確認

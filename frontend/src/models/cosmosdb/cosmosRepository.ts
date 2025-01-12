@@ -54,8 +54,7 @@ export class CosmosRepository {
 
         const newItem: ItemType = {
           id: createId,
-          title: 'browser test' + date,
-          url: 'https://www.xxxxxxxxxxxxx.com',
+          query: 'browser test' + date,
           result: 'No Problem',
           isError: false,
           dueDate: date,

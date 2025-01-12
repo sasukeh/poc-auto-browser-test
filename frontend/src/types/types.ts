@@ -5,8 +5,7 @@ export type MessageType = {
 
 export type ItemType = {
   id: string;
-  title: string;
-  url: string;
+  query: string;
   result: string;
   isError: boolean;
   dueDate: string;
