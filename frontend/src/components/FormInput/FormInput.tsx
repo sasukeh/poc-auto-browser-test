@@ -83,6 +83,19 @@ const FormInput = () => {
         isMan: false,
       })
     );
+
+    // Agent Testを実行する
+    const webapp_url = '/api/webapps';
+    console.log('🚀 ~ sendMessage ~ url:', webapp_url);
+    const res = await fetch(`${webapp_url}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
+    console.log('🚀 ~ sendMessage ~ res:', res);
+
     setMessage('');
     setIsLoading(false);
   };
@@ -90,7 +103,7 @@ const FormInput = () => {
   return (
     <div className="w-full justify-center items-center">
       <label htmlFor="chat" className="sr-only">
-        Your message
+        テストを実行したいブラウザのURLと、実行したいテストの項目を入力してください。
       </label>
       <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50">
         <textarea
@@ -99,9 +112,9 @@ const FormInput = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-          placeholder="Your message..."
+          placeholder="テストを実行したいブラウザのURLと、実行したいテストの項目を入力してください。"
         ></textarea>
-        <button
+        {/* <button
           onClick={testStart}
           className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
         >
@@ -118,7 +131,7 @@ const FormInput = () => {
           className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
         >
           create Item
-        </button>
+        </button> */}
         <button
           onClick={sendMessage}
           className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "

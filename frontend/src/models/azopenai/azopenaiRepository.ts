@@ -7,12 +7,23 @@ export class AzOpenaiRepository {
       const endpoint = process.env.AZURE_OPENAI_ENDPOINT!;
       const azureApiKey = process.env.AZURE_OPENAI_API_KEY!;
       const deploymentId = process.env.AZURE_OPENAI_DEPLOYMENT_ID!;
+
+      const content = `
+        - userの依頼
+        ${message}
+        
+        - 返答して欲しい文言
+        Test Agentを実行しますので、少々お待ちください。会話終了後、Test Resultの箇所に結果が表示されます。
+
+        - 指示
+        他の文言は出力しなくて良いです。
+      `;
       try {
         const messages = [
           { role: 'system', content: 'You are a helpful assistant.' },
           {
             role: 'user',
-            content: message,
+            content,
           },
         ];
         const client = new OpenAIClient(
