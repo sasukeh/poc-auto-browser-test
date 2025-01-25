@@ -5,4 +5,3 @@ from pydantic import BaseModel
 
 class DocumentStructure(BaseModel):
     content: str
-    keywords: list[str]

@@ -1,4 +1,5 @@
 'use client';
+import { FcHighPriority, FcOk } from 'react-icons/fc';
 
 const QueryResultTable = ({ data }: { data: any }) => {
   return (
@@ -8,7 +9,7 @@ const QueryResultTable = ({ data }: { data: any }) => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
             <th scope="col" className="px-6 py-3">
-              ID
+              #
             </th>
             <th scope="col" className="px-6 py-3">
               Query
@@ -20,25 +21,33 @@ const QueryResultTable = ({ data }: { data: any }) => {
               Is Error
             </th>
             <th scope="col" className="px-6 py-3">
-              Due Date
+              Date
             </th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item: any) => (
-            <tr key={item.id} className="bg-white border-b ">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                {item.id}
-              </th>
-              <td className="px-6 py-4">{item.query}</td>
-              <td className="px-6 py-4">{item.result}</td>
-              <td className="px-6 py-4">{item.isError ? 'Yes' : 'No'}</td>
-              <td className="px-6 py-4">{item.dueDate}</td>
-            </tr>
-          ))}
+          {data.map((item: any, index: number) => {
+            return (
+              <tr key={item.id} className="bg-white border-b ">
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {index + 1}
+                </th>
+                <td className="px-6 py-4">{item.query}</td>
+                <td className="px-6 py-4">{item.result}</td>
+                <td className="px-6 py-4">
+                  {item.isError ? (
+                    <FcHighPriority size={30} />
+                  ) : (
+                    <FcOk size="30" />
+                  )}
+                </td>
+                <td className="px-6 py-4">{item.dueDate}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

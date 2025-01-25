@@ -1,8 +1,8 @@
+import asyncio
 import os
 import json
 from dotenv import load_dotenv
 
-# FastAPIをインポート
 from fastapi import FastAPI
 from asyncio.log import logger
 
@@ -37,17 +37,8 @@ STR_AI_SYSTEMMESSAGE = """
 - 回答の最初に「```json」を含めないこと。
 
 ##回答形式##
-{
-    "content":"内容の要約をしてください",
-    "keywords": "カンマ区切りのキーワード群",
-}
-
-##記載情報##
-- content: 要約の情報はcontentに記載してください。
-- keywords: 画像内の情報で重要なキーワードをkeywordsに記載してください。カンマ区切りで複数記載可能です。
+処理の内容を３行に要約
 """
-
-# GETメソッドでルートURLにアクセスされたときの処理
 
 
 @app.get("/")
@@ -58,54 +49,75 @@ async def root():
 @app.post("/agent")
 async def root(query: str):
     logger.info(f"query: {query}")
-
-    # Agentの処理を実行
-    result = await do_agent_func(query)
-    converted_agent_data = json.loads(json.dumps(result, default=str))
-
     # 現在の日時を取得
     now = datetime.now()
 
     # 文字列に変換
-    current_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+    current_time_str = now.strftime("%Y-%m-%d-%H-%M-%S")
+    try:
+        # Agentの処理を実行
+        result = await do_agent_func(query)
+        converted_agent_data = json.loads(json.dumps(result, default=str))
+        print("*****************************************")
+        print(converted_agent_data)
+        print("*****************************************")
 
-    # AOAIにerrorが存在するかどうか判定させる処理
-    aoai_client = AzureOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-        api_version="2024-08-01-preview"  # 2024-08-01-preview
-    )
-    azure_openai_service = AzureOpenAIService(client=aoai_client)
+        converted_agent_data_test = "Hello! I'm Yusuke. How are you today?"
 
-    messages = []
-    messages.append(
-        {"role": "system", "content": STR_AI_SYSTEMMESSAGE})
-    messages.append(
-        {"role": "user", "content": converted_agent_data})
+        # AOAIにerrorが存在するかどうか判定させる処理
+        aoai_client = AzureOpenAI(
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+            api_version="2024-08-01-preview"
+        )
+        azure_openai_service = AzureOpenAIService(client=aoai_client)
 
-    response = azure_openai_service.getChatCompletionJsonStructuredMode(
-        messages, 0, 0, DocumentStructure)
+        messages = []
+        messages.append(
+            {"role": "system", "content": STR_AI_SYSTEMMESSAGE})
+        messages.append(
+            {"role": "user", "content": converted_agent_data_test})
 
-    doc_structured = response.choices[0].message.parsed
+        response = azure_openai_service.getChatCompletionJsonStructuredMode(
+            messages, 0, 0, DocumentStructure)
 
-    converted_data = json.loads(json.dumps(doc_structured, default=str))
-    logger.info(f"converted_data ~ 🚀 ~: {converted_data}")
+        doc_structured = response.choices[0].message.parsed
 
-    # CosmosDBに登録するアイテムのオブジェクト
-    cosmos_service = CosmosService()
-    cosmos_page_obj = CosmosPageObj(
-        query=query,
-        result=converted_data,
-        isError=False,
-        dueDate=current_time_str,
-    )
+        converted_data = json.loads(json.dumps(doc_structured, default=str))
+        # CosmosDBに登録するアイテムのオブジェクト
+        cosmos_service = CosmosService()
+        cosmos_page_obj = CosmosPageObj(
+            query=query,
+            result=converted_data,
+            isError=False,
+            dueDate=current_time_str,
+        )
 
-    cosmos_service.insert_data(cosmos_page_obj.to_dict())
-    return {
-        "result": [
-            {"data": converted_data},
-        ]
-    }
+        cosmos_service.insert_data(cosmos_page_obj.to_dict())
+        return {
+            "result": [
+                {"data": converted_data},
+            ]
+        }
+
+    except Exception as e:
+        # ログ出力 (exc_info=True でスタックトレースも出力)
+        logger.error(f"An error occurred: {e}", exc_info=True)
+        # CosmosDBに登録するアイテムのオブジェクト
+        cosmos_service = CosmosService()
+        cosmos_page_obj = CosmosPageObj(
+            query=query,
+            result=str(e),
+            isError=True,
+            dueDate=current_time_str,
+        )
+
+        cosmos_service.insert_data(cosmos_page_obj.to_dict())
+        return {
+            "result": [
+                {"data": converted_data},
+            ]
+        }
 
 
 async def do_agent_func(query: str):
@@ -127,5 +139,6 @@ async def do_agent_func(query: str):
         ),
         browser=browser,
     )
-    result = await agent.run(max_steps=5)
+    # result = await agent.run(max_steps=10)
+    result = await agent.run()
     return result

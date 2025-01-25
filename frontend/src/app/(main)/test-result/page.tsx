@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export default function TestResult() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log('🚀 ~ TestResult ~ data:', data);
+
   useEffect(() => {
     setIsLoading(true);
     document.title = 'Test Result Page';
