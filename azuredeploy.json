@@ -346,162 +346,162 @@
         // "raiPolicyName": "Microsoft.DefaultV2"
       }
     },
-    {
-      "type": "Microsoft.CognitiveServices/accounts/raiPolicies",
-      "apiVersion": "2024-10-01",
-      "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Microsoft.Default')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
-      ],
-      "properties": {
-        "mode": "Blocking",
-        "contentFilters": [
-          {
-            "name": "Hate",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Hate",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Sexual",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Sexual",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Violence",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Violence",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Selfharm",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Selfharm",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          }
-        ]
-      }
-    },
-    {
-      "type": "Microsoft.CognitiveServices/accounts/raiPolicies",
-      "apiVersion": "2024-10-01",
-      "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Microsoft.DefaultV2')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
-      ],
-      "properties": {
-        "mode": "Blocking",
-        "contentFilters": [
-          {
-            "name": "Hate",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Hate",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Sexual",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Sexual",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Violence",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Violence",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Selfharm",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Selfharm",
-            "severityThreshold": "Medium",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Jailbreak",
-            "blocking": true,
-            "enabled": true,
-            "source": "Prompt"
-          },
-          {
-            "name": "Protected Material Text",
-            "blocking": true,
-            "enabled": true,
-            "source": "Completion"
-          },
-          {
-            "name": "Protected Material Code",
-            "blocking": false,
-            "enabled": true,
-            "source": "Completion"
-          }
-        ]
-      }
-    },
+    // {
+    //   "type": "Microsoft.CognitiveServices/accounts/raiPolicies",
+    //   "apiVersion": "2024-10-01",
+    //   "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Microsoft.Default')]",
+    //   "dependsOn": [
+    //     "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
+    //   ],
+    //   "properties": {
+    //     "mode": "Blocking",
+    //     "contentFilters": [
+    //       {
+    //         "name": "Hate",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Hate",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Sexual",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Sexual",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Violence",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Violence",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Selfharm",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Selfharm",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   "type": "Microsoft.CognitiveServices/accounts/raiPolicies",
+    //   "apiVersion": "2024-10-01",
+    //   "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Microsoft.DefaultV2')]",
+    //   "dependsOn": [
+    //     "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
+    //   ],
+    //   "properties": {
+    //     "mode": "Blocking",
+    //     "contentFilters": [
+    //       {
+    //         "name": "Hate",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Hate",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Sexual",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Sexual",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Violence",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Violence",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Selfharm",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Selfharm",
+    //         "severityThreshold": "Medium",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Jailbreak",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Prompt"
+    //       },
+    //       {
+    //         "name": "Protected Material Text",
+    //         "blocking": true,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       },
+    //       {
+    //         "name": "Protected Material Code",
+    //         "blocking": false,
+    //         "enabled": true,
+    //         "source": "Completion"
+    //       }
+    //     ]
+    //   }
+    // },
     {
       "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
       "apiVersion": "2024-09-01-preview",
