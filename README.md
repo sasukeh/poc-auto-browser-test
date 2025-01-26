@@ -26,4 +26,4 @@ Agent が自動でブラウザテストを実施するためのリポジトリ�
 
 ## Deploy
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/SatakeYusuke19920527/poc-auto-browser-test/refs/heads/main/azuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/SatakeYusuke19920527/poc-auto-browser-test/main/azuredeploy.json)
