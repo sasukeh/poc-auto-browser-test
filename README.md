@@ -23,3 +23,7 @@ Agent が自動でブラウザテストを実施するためのリポジトリ�
 3. Azure App Service に hosting されている browser-use が指定したブラウザのテストを実行
 4. テスト結果を Azure CosmosDB へ保存
 5. Static Web Apps よりテスト結果を確認
+
+## Deploy
+
+![Deploy to Azure](https://aka.ms/deploytoazurebutton)

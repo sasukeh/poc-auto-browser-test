@@ -1,0 +1,1748 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sites_webapp_poc_auto_browser_test_name": {
+      "defaultValue": "webapp-poc-auto-browser-test",
+      "type": "String"
+    },
+    "staticSites_swa_poc_auto_browser_test_name": {
+      "defaultValue": "swa-poc-auto-browser-test",
+      "type": "String"
+    },
+    "storageAccounts_funcstoragepocauto_name": {
+      "defaultValue": "funcstoragepocauto",
+      "type": "String"
+    },
+    "serverfarms_plan_poc_auto_browser_test_name": {
+      "defaultValue": "plan-poc-auto-browser-test",
+      "type": "String"
+    },
+    "components_ai_poc_auto_browser_test_name": {
+      "defaultValue": "ai-poc-auto-browser-test",
+      "type": "String"
+    },
+    "components_webapp_poc_auto_browser_test_name": {
+      "defaultValue": "webapp-poc-auto-browser-test",
+      "type": "String"
+    },
+    "databaseAccounts_cosmos_poc_broser_test_name": {
+      "defaultValue": "cosmos-poc-broser-test",
+      "type": "String"
+    },
+    "accounts_aoai_poc_auto_browser_test_name": {
+      "defaultValue": "aoai-poc-auto-browser-test",
+      "type": "String"
+    },
+    "smartdetectoralertrules_failure_anomalies___ai_poc_auto_browser_test_name": {
+      "defaultValue": "failure anomalies - ai-poc-auto-browser-test",
+      "type": "String"
+    },
+    "smartdetectoralertrules_failure_anomalies___webapp_poc_auto_browser_test_name": {
+      "defaultValue": "failure anomalies - webapp-poc-auto-browser-test",
+      "type": "String"
+    },
+    "actiongroups_application_insights_smart_detection_externalid": {
+      "defaultValue": "/subscriptions/9819147e-88ee-45cb-9c60-d3cd02e918e8/resourceGroups/rg-rag-extra-1/providers/microsoft.insights/actiongroups/application insights smart detection",
+      "type": "String"
+    },
+    "workspaces_DefaultWorkspace_9819147e_88ee_45cb_9c60_d3cd02e918e8_EUS_externalid": {
+      "defaultValue": "/subscriptions/9819147e-88ee-45cb-9c60-d3cd02e918e8/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-9819147e-88ee-45cb-9c60-d3cd02e918e8-EUS",
+      "type": "String"
+    },
+    "workspaces_DefaultWorkspace_9819147e_88ee_45cb_9c60_d3cd02e918e8_EUS2_externalid": {
+      "defaultValue": "/subscriptions/9819147e-88ee-45cb-9c60-d3cd02e918e8/resourceGroups/DefaultResourceGroup-EUS2/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-9819147e-88ee-45cb-9c60-d3cd02e918e8-EUS2",
+      "type": "String"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2024-10-01",
+      "name": "[parameters('accounts_aoai_poc_auto_browser_test_name')]",
+      "location": "eastus",
+      "sku": {
+        "name": "S0"
+      },
+      "kind": "OpenAI",
+      "properties": {
+        "apiProperties": {},
+        "customSubDomainName": "[parameters('accounts_aoai_poc_auto_browser_test_name')]",
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "virtualNetworkRules": [],
+          "ipRules": []
+        },
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "apiVersion": "2024-09-01-preview",
+      "name": "[parameters('databaseAccounts_cosmos_poc_broser_test_name')]",
+      "location": "East US",
+      "tags": {
+        "defaultExperience": "Core (SQL)",
+        "hidden-cosmos-mmspecial": ""
+      },
+      "kind": "GlobalDocumentDB",
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "publicNetworkAccess": "Enabled",
+        "enableAutomaticFailover": false,
+        "enableMultipleWriteLocations": false,
+        "isVirtualNetworkFilterEnabled": false,
+        "virtualNetworkRules": [],
+        "disableKeyBasedMetadataWriteAccess": false,
+        "enableFreeTier": false,
+        "enableAnalyticalStorage": false,
+        "analyticalStorageConfiguration": {
+          "schemaType": "WellDefined"
+        },
+        "databaseAccountOfferType": "Standard",
+        "enableMaterializedViews": false,
+        "capacityMode": "Serverless",
+        "defaultIdentity": "FirstPartyIdentity",
+        "networkAclBypass": "None",
+        "disableLocalAuth": false,
+        "enablePartitionMerge": false,
+        "enablePerRegionPerPartitionAutoscale": false,
+        "enableBurstCapacity": false,
+        "enablePriorityBasedExecution": false,
+        "defaultPriorityLevel": "High",
+        "minimalTlsVersion": "Tls12",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session",
+          "maxIntervalInSeconds": 5,
+          "maxStalenessPrefix": 100
+        },
+        "locations": [
+          {
+            "locationName": "East US",
+            "failoverPriority": 0,
+            "isZoneRedundant": false
+          }
+        ],
+        "cors": [],
+        "capabilities": [],
+        "ipRules": [],
+        "backupPolicy": {
+          "type": "Periodic",
+          "periodicModeProperties": {
+            "backupIntervalInMinutes": 240,
+            "backupRetentionIntervalInHours": 8,
+            "backupStorageRedundancy": "Geo"
+          }
+        },
+        "networkAclBypassResourceIds": [],
+        "diagnosticLogSettings": {
+          "enableFullTextQuery": "None"
+        },
+        "capacity": {
+          "totalThroughputLimit": 4000
+        }
+      }
+    },
+    {
+      "type": "microsoft.insights/components",
+      "apiVersion": "2020-02-02",
+      "name": "[parameters('components_ai_poc_auto_browser_test_name')]",
+      "location": "eastus",
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web",
+        "Flow_Type": "Redfield",
+        "Request_Source": "IbizaWebAppExtensionCreate",
+        "RetentionInDays": 90,
+        "WorkspaceResourceId": "[parameters('workspaces_DefaultWorkspace_9819147e_88ee_45cb_9c60_d3cd02e918e8_EUS_externalid')]",
+        "IngestionMode": "LogAnalytics",
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
+      }
+    },
+    {
+      "type": "microsoft.insights/components",
+      "apiVersion": "2020-02-02",
+      "name": "[parameters('components_webapp_poc_auto_browser_test_name')]",
+      "location": "eastus2",
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web",
+        "Flow_Type": "Redfield",
+        "Request_Source": "IbizaAIExtensionEnablementBlade",
+        "RetentionInDays": 90,
+        "WorkspaceResourceId": "[parameters('workspaces_DefaultWorkspace_9819147e_88ee_45cb_9c60_d3cd02e918e8_EUS2_externalid')]",
+        "IngestionMode": "LogAnalytics",
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-05-01",
+      "name": "[parameters('storageAccounts_funcstoragepocauto_name')]",
+      "location": "eastus",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "Storage",
+      "properties": {
+        "defaultToOAuthAuthentication": true,
+        "allowCrossTenantReplication": false,
+        "minimumTlsVersion": "TLS1_2",
+        "allowBlobPublicAccess": false,
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+          "services": {
+            "file": {
+              "keyType": "Account",
+              "enabled": true
+            },
+            "blob": {
+              "keyType": "Account",
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2024-04-01",
+      "name": "[parameters('serverfarms_plan_poc_auto_browser_test_name')]",
+      "location": "East US 2",
+      "sku": {
+        "name": "P0v3",
+        "tier": "Premium0V3",
+        "size": "P0v3",
+        "family": "Pv3",
+        "capacity": 1
+      },
+      "kind": "linux",
+      "properties": {
+        "perSiteScaling": false,
+        "elasticScaleEnabled": false,
+        "maximumElasticWorkerCount": 1,
+        "isSpot": false,
+        "reserved": true,
+        "isXenon": false,
+        "hyperV": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0,
+        "zoneRedundant": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/staticSites",
+      "apiVersion": "2024-04-01",
+      "name": "[parameters('staticSites_swa_poc_auto_browser_test_name')]",
+      "location": "East US 2",
+      "sku": {
+        "name": "Free",
+        "tier": "Free"
+      },
+      "properties": {
+        "repositoryUrl": "https://github.com/SatakeYusuke19920527/poc-auto-browser-test",
+        "branch": "main",
+        "stagingEnvironmentPolicy": "Enabled",
+        "allowConfigFileUpdates": true,
+        "provider": "GitHub",
+        "enterpriseGradeCdnStatus": "Disabled"
+      }
+    },
+    {
+      "type": "microsoft.alertsmanagement/smartdetectoralertrules",
+      "apiVersion": "2021-04-01",
+      "name": "[parameters('smartdetectoralertrules_failure_anomalies___ai_poc_auto_browser_test_name')]",
+      "location": "global",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "description": "Failure Anomalies notifies you of an unusual rise in the rate of failed HTTP requests or dependency calls.",
+        "state": "Enabled",
+        "severity": "Sev3",
+        "frequency": "PT1M",
+        "detector": {
+          "id": "FailureAnomaliesDetector"
+        },
+        "scope": [
+          "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+        ],
+        "actionGroups": {
+          "groupIds": [
+            "[parameters('actiongroups_application_insights_smart_detection_externalid')]"
+          ]
+        }
+      }
+    },
+    {
+      "type": "microsoft.alertsmanagement/smartdetectoralertrules",
+      "apiVersion": "2021-04-01",
+      "name": "[parameters('smartdetectoralertrules_failure_anomalies___webapp_poc_auto_browser_test_name')]",
+      "location": "global",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "description": "Failure Anomalies notifies you of an unusual rise in the rate of failed HTTP requests or dependency calls.",
+        "state": "Enabled",
+        "severity": "Sev3",
+        "frequency": "PT1M",
+        "detector": {
+          "id": "FailureAnomaliesDetector"
+        },
+        "scope": [
+          "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+        ],
+        "actionGroups": {
+          "groupIds": [
+            "[parameters('actiongroups_application_insights_smart_detection_externalid')]"
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/defenderForAISettings",
+      "apiVersion": "2024-10-01",
+      "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "state": "Disabled"
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/deployments",
+      "apiVersion": "2024-10-01",
+      "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/gpt-4o')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
+      ],
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 100
+      },
+      "properties": {
+        "model": {
+          "format": "OpenAI",
+          "name": "gpt-4o",
+          "version": "2024-11-20"
+        },
+        "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+        "currentCapacity": 100,
+        "raiPolicyName": "Microsoft.DefaultV2"
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/raiPolicies",
+      "apiVersion": "2024-10-01",
+      "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Microsoft.Default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "mode": "Blocking",
+        "contentFilters": [
+          {
+            "name": "Hate",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Hate",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Sexual",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Sexual",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Violence",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Violence",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Selfharm",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Selfharm",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/raiPolicies",
+      "apiVersion": "2024-10-01",
+      "name": "[concat(parameters('accounts_aoai_poc_auto_browser_test_name'), '/Microsoft.DefaultV2')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_aoai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "mode": "Blocking",
+        "contentFilters": [
+          {
+            "name": "Hate",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Hate",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Sexual",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Sexual",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Violence",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Violence",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Selfharm",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Selfharm",
+            "severityThreshold": "Medium",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Jailbreak",
+            "blocking": true,
+            "enabled": true,
+            "source": "Prompt"
+          },
+          {
+            "name": "Protected Material Text",
+            "blocking": true,
+            "enabled": true,
+            "source": "Completion"
+          },
+          {
+            "name": "Protected Material Code",
+            "blocking": false,
+            "enabled": true,
+            "source": "Completion"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "apiVersion": "2024-09-01-preview",
+      "name": "[concat(parameters('databaseAccounts_cosmos_poc_broser_test_name'), '/agent-db')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_cosmos_poc_broser_test_name'))]"
+      ],
+      "properties": {
+        "resource": {
+          "id": "agent-db"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions",
+      "apiVersion": "2024-09-01-preview",
+      "name": "[concat(parameters('databaseAccounts_cosmos_poc_broser_test_name'), '/00000000-0000-0000-0000-000000000001')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_cosmos_poc_broser_test_name'))]"
+      ],
+      "properties": {
+        "roleName": "Cosmos DB Built-in Data Reader",
+        "type": "BuiltInRole",
+        "assignableScopes": [
+          "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_cosmos_poc_broser_test_name'))]"
+        ],
+        "permissions": [
+          {
+            "dataActions": [
+              "Microsoft.DocumentDB/databaseAccounts/readMetadata",
+              "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/executeQuery",
+              "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/readChangeFeed",
+              "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read"
+            ],
+            "notDataActions": []
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions",
+      "apiVersion": "2024-09-01-preview",
+      "name": "[concat(parameters('databaseAccounts_cosmos_poc_broser_test_name'), '/00000000-0000-0000-0000-000000000002')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_cosmos_poc_broser_test_name'))]"
+      ],
+      "properties": {
+        "roleName": "Cosmos DB Built-in Data Contributor",
+        "type": "BuiltInRole",
+        "assignableScopes": [
+          "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_cosmos_poc_broser_test_name'))]"
+        ],
+        "permissions": [
+          {
+            "dataActions": [
+              "Microsoft.DocumentDB/databaseAccounts/readMetadata",
+              "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/*",
+              "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/*"
+            ],
+            "notDataActions": []
+          }
+        ]
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/degradationindependencyduration')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "degradationindependencyduration",
+          "DisplayName": "Degradation in dependency duration",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/degradationindependencyduration')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "degradationindependencyduration",
+          "DisplayName": "Degradation in dependency duration",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/degradationinserverresponsetime')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "degradationinserverresponsetime",
+          "DisplayName": "Degradation in server response time",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/degradationinserverresponsetime')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "degradationinserverresponsetime",
+          "DisplayName": "Degradation in server response time",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/digestMailConfiguration')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "digestMailConfiguration",
+          "DisplayName": "Digest Mail Configuration",
+          "Description": "This rule describes the digest mail preferences",
+          "HelpUrl": "www.homail.com",
+          "IsHidden": true,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/digestMailConfiguration')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "digestMailConfiguration",
+          "DisplayName": "Digest Mail Configuration",
+          "Description": "This rule describes the digest mail preferences",
+          "HelpUrl": "www.homail.com",
+          "IsHidden": true,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/extension_billingdatavolumedailyspikeextension')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_billingdatavolumedailyspikeextension",
+          "DisplayName": "Abnormal rise in daily data volume (preview)",
+          "Description": "This detection rule automatically analyzes the billing data generated by your application, and can warn you about an unusual increase in your application's billing costs",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/tree/master/SmartDetection/billing-data-volume-daily-spike.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/extension_billingdatavolumedailyspikeextension')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_billingdatavolumedailyspikeextension",
+          "DisplayName": "Abnormal rise in daily data volume (preview)",
+          "Description": "This detection rule automatically analyzes the billing data generated by your application, and can warn you about an unusual increase in your application's billing costs",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/tree/master/SmartDetection/billing-data-volume-daily-spike.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/extension_canaryextension')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_canaryextension",
+          "DisplayName": "Canary extension",
+          "Description": "Canary extension",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/",
+          "IsHidden": true,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/extension_canaryextension')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_canaryextension",
+          "DisplayName": "Canary extension",
+          "Description": "Canary extension",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/",
+          "IsHidden": true,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/extension_exceptionchangeextension')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_exceptionchangeextension",
+          "DisplayName": "Abnormal rise in exception volume (preview)",
+          "Description": "This detection rule automatically analyzes the exceptions thrown in your application, and can warn you about unusual patterns in your exception telemetry.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/abnormal-rise-in-exception-volume.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/extension_exceptionchangeextension')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_exceptionchangeextension",
+          "DisplayName": "Abnormal rise in exception volume (preview)",
+          "Description": "This detection rule automatically analyzes the exceptions thrown in your application, and can warn you about unusual patterns in your exception telemetry.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/abnormal-rise-in-exception-volume.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/extension_memoryleakextension')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_memoryleakextension",
+          "DisplayName": "Potential memory leak detected (preview)",
+          "Description": "This detection rule automatically analyzes the memory consumption of each process in your application, and can warn you about potential memory leaks or increased memory consumption.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/tree/master/SmartDetection/memory-leak.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/extension_memoryleakextension')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_memoryleakextension",
+          "DisplayName": "Potential memory leak detected (preview)",
+          "Description": "This detection rule automatically analyzes the memory consumption of each process in your application, and can warn you about potential memory leaks or increased memory consumption.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/tree/master/SmartDetection/memory-leak.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/extension_securityextensionspackage')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_securityextensionspackage",
+          "DisplayName": "Potential security issue detected (preview)",
+          "Description": "This detection rule automatically analyzes the telemetry generated by your application and detects potential security issues.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/application-security-detection-pack.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/extension_securityextensionspackage')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_securityextensionspackage",
+          "DisplayName": "Potential security issue detected (preview)",
+          "Description": "This detection rule automatically analyzes the telemetry generated by your application and detects potential security issues.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/application-security-detection-pack.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/extension_traceseveritydetector')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_traceseveritydetector",
+          "DisplayName": "Degradation in trace severity ratio (preview)",
+          "Description": "This detection rule automatically analyzes the trace logs emitted from your application, and can warn you about unusual patterns in the severity of your trace telemetry.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/degradation-in-trace-severity-ratio.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/extension_traceseveritydetector')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "extension_traceseveritydetector",
+          "DisplayName": "Degradation in trace severity ratio (preview)",
+          "Description": "This detection rule automatically analyzes the trace logs emitted from your application, and can warn you about unusual patterns in the severity of your trace telemetry.",
+          "HelpUrl": "https://github.com/Microsoft/ApplicationInsights-Home/blob/master/SmartDetection/degradation-in-trace-severity-ratio.md",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/longdependencyduration')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "longdependencyduration",
+          "DisplayName": "Long dependency duration",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/longdependencyduration')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "longdependencyduration",
+          "DisplayName": "Long dependency duration",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/migrationToAlertRulesCompleted')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "migrationToAlertRulesCompleted",
+          "DisplayName": "Migration To Alert Rules Completed",
+          "Description": "A configuration that controls the migration state of Smart Detection to Smart Alerts",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": true,
+          "IsEnabledByDefault": false,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": false,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/migrationToAlertRulesCompleted')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "migrationToAlertRulesCompleted",
+          "DisplayName": "Migration To Alert Rules Completed",
+          "Description": "A configuration that controls the migration state of Smart Detection to Smart Alerts",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": true,
+          "IsEnabledByDefault": false,
+          "IsInPreview": true,
+          "SupportsEmailNotifications": false
+        },
+        "enabled": false,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/slowpageloadtime')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "slowpageloadtime",
+          "DisplayName": "Slow page load time",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/slowpageloadtime')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "slowpageloadtime",
+          "DisplayName": "Slow page load time",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_ai_poc_auto_browser_test_name'), '/slowserverresponsetime')]",
+      "location": "eastus",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_ai_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "slowserverresponsetime",
+          "DisplayName": "Slow server response time",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "microsoft.insights/components/ProactiveDetectionConfigs",
+      "apiVersion": "2018-05-01-preview",
+      "name": "[concat(parameters('components_webapp_poc_auto_browser_test_name'), '/slowserverresponsetime')]",
+      "location": "eastus2",
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components', parameters('components_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "ruleDefinitions": {
+          "Name": "slowserverresponsetime",
+          "DisplayName": "Slow server response time",
+          "Description": "Smart Detection rules notify you of performance anomaly issues.",
+          "HelpUrl": "https://docs.microsoft.com/en-us/azure/application-insights/app-insights-proactive-performance-diagnostics",
+          "IsHidden": false,
+          "IsEnabledByDefault": true,
+          "IsInPreview": false,
+          "SupportsEmailNotifications": true
+        },
+        "enabled": true,
+        "sendEmailsToSubscriptionOwners": true,
+        "customEmails": []
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "properties": {
+        "cors": {
+          "corsRules": []
+        },
+        "deleteRetentionPolicy": {
+          "allowPermanentDelete": false,
+          "enabled": false
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "properties": {
+        "protocolSettings": {
+          "smb": {}
+        },
+        "cors": {
+          "corsRules": []
+        },
+        "shareDeleteRetentionPolicy": {
+          "enabled": true,
+          "days": 7
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/queueServices",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "properties": {
+        "cors": {
+          "corsRules": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/tableServices",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "properties": {
+        "cors": {
+          "corsRules": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2024-04-01",
+      "name": "[parameters('sites_webapp_poc_auto_browser_test_name')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_plan_poc_auto_browser_test_name'))]"
+      ],
+      "kind": "app,linux",
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '-gud9g5g5e3byazfb.eastus2-01.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '-gud9g5g5e3byazfb.scm.eastus2-01.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_plan_poc_auto_browser_test_name'))]",
+        "reserved": true,
+        "isXenon": false,
+        "hyperV": false,
+        "dnsConfiguration": {},
+        "vnetRouteAllEnabled": false,
+        "vnetImagePullEnabled": false,
+        "vnetContentShareEnabled": false,
+        "siteConfig": {
+          "numberOfWorkers": 1,
+          "linuxFxVersion": "PYTHON|3.11",
+          "acrUseManagedIdentityCreds": false,
+          "alwaysOn": true,
+          "http20Enabled": false,
+          "functionAppScaleLimit": 0,
+          "minimumElasticInstanceCount": 1
+        },
+        "scmSiteAlsoStopped": false,
+        "clientAffinityEnabled": false,
+        "clientCertEnabled": false,
+        "clientCertMode": "Required",
+        "hostNamesDisabled": false,
+        "ipMode": "IPv4",
+        "vnetBackupRestoreEnabled": false,
+        "customDomainVerificationId": "3DDBF32C7DAB60C253327779B1BB9B014182646180728B02C9DADB52382E2690",
+        "containerSize": 0,
+        "dailyMemoryTimeQuota": 0,
+        "httpsOnly": true,
+        "endToEndEncryptionEnabled": false,
+        "redundancyMode": "None",
+        "publicNetworkAccess": "Enabled",
+        "storageAccountRequired": false,
+        "keyVaultReferenceIdentity": "SystemAssigned",
+        "autoGeneratedDomainNameLabelScope": "TenantReuse"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/ftp')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "allow": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/scm')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "allow": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/web')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "numberOfWorkers": 1,
+        "defaultDocuments": [
+          "Default.htm",
+          "Default.html",
+          "Default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php",
+          "hostingstart.html"
+        ],
+        "netFrameworkVersion": "v4.0",
+        "linuxFxVersion": "PYTHON|3.11",
+        "requestTracingEnabled": false,
+        "remoteDebuggingEnabled": false,
+        "remoteDebuggingVersion": "VS2022",
+        "httpLoggingEnabled": false,
+        "acrUseManagedIdentityCreds": false,
+        "logsDirectorySizeLimit": 35,
+        "detailedErrorLoggingEnabled": false,
+        "publishingUsername": "REDACTED",
+        "scmType": "None",
+        "use32BitWorkerProcess": true,
+        "webSocketsEnabled": false,
+        "alwaysOn": true,
+        "appCommandLine": "startup.sh",
+        "managedPipelineMode": "Integrated",
+        "virtualApplications": [
+          {
+            "virtualPath": "/",
+            "physicalPath": "site\\wwwroot",
+            "preloadEnabled": true
+          }
+        ],
+        "loadBalancing": "LeastRequests",
+        "experiments": {
+          "rampUpRules": []
+        },
+        "autoHealEnabled": false,
+        "vnetRouteAllEnabled": false,
+        "vnetPrivatePortsCount": 0,
+        "publicNetworkAccess": "Enabled",
+        "localMySqlEnabled": false,
+        "ipSecurityRestrictions": [
+          {
+            "ipAddress": "Any",
+            "action": "Allow",
+            "priority": 2147483647,
+            "name": "Allow all",
+            "description": "Allow all access"
+          }
+        ],
+        "scmIpSecurityRestrictions": [
+          {
+            "ipAddress": "Any",
+            "action": "Allow",
+            "priority": 2147483647,
+            "name": "Allow all",
+            "description": "Allow all access"
+          }
+        ],
+        "scmIpSecurityRestrictionsUseMain": false,
+        "http20Enabled": false,
+        "minTlsVersion": "1.2",
+        "scmMinTlsVersion": "1.2",
+        "ftpsState": "FtpsOnly",
+        "preWarmedInstanceCount": 0,
+        "elasticWebAppScaleLimit": 0,
+        "functionsRuntimeScaleMonitoringEnabled": false,
+        "minimumElasticInstanceCount": 1,
+        "azureStorageAccounts": {}
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/06c27c79-5264-468f-b9dc-4e7e63899227')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T01:49:24.9639963Z",
+        "end_time": "2025-01-26T01:50:48.2136414Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/11ab3b1f-c587-430d-b87c-f6ba31878946')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T06:17:28.3453353Z",
+        "end_time": "2025-01-26T06:18:58.3091504Z",
+        "active": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/5efb0572-60e9-4ace-98a2-ce96ca790d3d')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T00:56:01.0868287Z",
+        "end_time": "2025-01-26T00:57:27.304672Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/6e34bd3d-8d57-4020-b543-10007d958a7e')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T05:52:07.6316303Z",
+        "end_time": "2025-01-26T05:53:33.4998386Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/8c41a48e-4ebb-48f0-b46b-e27915685bed')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T03:03:49.4241471Z",
+        "end_time": "2025-01-26T03:05:09.3959481Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/9f26b31a-4cac-4052-9c49-a6b385daae48')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T01:53:02.7706326Z",
+        "end_time": "2025-01-26T01:54:23.0267059Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/9f4e5a81-85ec-41b5-9426-dcc85cb0190c')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-25T12:45:43.1705511Z",
+        "end_time": "2025-01-25T12:47:17.8286802Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/b4a22c45-1317-48c5-875e-1d360be3dafe')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-25T12:48:37.4486407Z",
+        "end_time": "2025-01-25T12:49:52.8163604Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/b9a81293-12e4-4f99-a7fb-a73e9fe651a6')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T00:45:56.5090029Z",
+        "end_time": "2025-01-26T00:47:16.5963807Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/deployments",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/e4f62aa0-7439-4f26-b2b9-d9bf0f56b356')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "status": 4,
+        "author_email": "N/A",
+        "author": "ms-azuretools-vscode",
+        "deployer": "ms-azuretools-vscode",
+        "message": "Created via a push deployment",
+        "start_time": "2025-01-26T00:38:54.089819Z",
+        "end_time": "2025-01-26T00:40:18.9482726Z",
+        "active": false
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/hostNameBindings",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('sites_webapp_poc_auto_browser_test_name'), '/', parameters('sites_webapp_poc_auto_browser_test_name'), '-gud9g5g5e3byazfb.eastus2-01.azurewebsites.net')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_webapp_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "siteName": "webapp-poc-auto-browser-test",
+        "hostNameType": "Verified"
+      }
+    },
+    {
+      "type": "Microsoft.Web/staticSites/basicAuth",
+      "apiVersion": "2024-04-01",
+      "name": "[concat(parameters('staticSites_swa_poc_auto_browser_test_name'), '/default')]",
+      "location": "East US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/staticSites', parameters('staticSites_swa_poc_auto_browser_test_name'))]"
+      ],
+      "properties": {
+        "applicableEnvironmentsMode": "SpecifiedEnvironments"
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2024-09-01-preview",
+      "name": "[concat(parameters('databaseAccounts_cosmos_poc_broser_test_name'), '/agent-db/agent-container')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('databaseAccounts_cosmos_poc_broser_test_name'), 'agent-db')]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_cosmos_poc_broser_test_name'))]"
+      ],
+      "properties": {
+        "resource": {
+          "id": "agent-container",
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "automatic": true,
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/\"_etag\"/?"
+              }
+            ]
+          },
+          "partitionKey": {
+            "paths": ["/id"],
+            "kind": "Hash",
+            "version": 2
+          },
+          "uniqueKeyPolicy": {
+            "uniqueKeys": []
+          },
+          "conflictResolutionPolicy": {
+            "mode": "LastWriterWins",
+            "conflictResolutionPath": "/_ts"
+          },
+          "computedProperties": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default/app-package-func-poc-auto-browser-test-3da2bc8')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_funcstoragepocauto_name'), 'default')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "properties": {
+        "immutableStorageWithVersioning": {
+          "enabled": false
+        },
+        "defaultEncryptionScope": "$account-encryption-key",
+        "denyEncryptionScopeOverride": false,
+        "publicAccess": "None"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default/azure-webjobs-hosts')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_funcstoragepocauto_name'), 'default')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "properties": {
+        "immutableStorageWithVersioning": {
+          "enabled": false
+        },
+        "defaultEncryptionScope": "$account-encryption-key",
+        "denyEncryptionScopeOverride": false,
+        "publicAccess": "None"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default/azure-webjobs-secrets')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_funcstoragepocauto_name'), 'default')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "properties": {
+        "immutableStorageWithVersioning": {
+          "enabled": false
+        },
+        "defaultEncryptionScope": "$account-encryption-key",
+        "denyEncryptionScopeOverride": false,
+        "publicAccess": "None"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/tableServices/tables",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('storageAccounts_funcstoragepocauto_name'), '/default/AzureFunctionsDiagnosticEvents202501')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/tableServices', parameters('storageAccounts_funcstoragepocauto_name'), 'default')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_funcstoragepocauto_name'))]"
+      ],
+      "properties": {}
+    }
+  ]
+}
