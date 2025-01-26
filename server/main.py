@@ -43,7 +43,7 @@ STR_AI_SYSTEMMESSAGE = """
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World5"}
 
 
 @app.post("/agent")
@@ -51,18 +51,19 @@ async def root(query: str):
     logger.info(f"query: {query}")
     # 現在の日時を取得
     now = datetime.now()
-
     # 文字列に変換
     current_time_str = now.strftime("%Y-%m-%d-%H-%M-%S")
     try:
         # Agentの処理を実行
-        result = await do_agent_func(query)
-        converted_agent_data = json.loads(json.dumps(result, default=str))
-        print("*****************************************")
-        print(converted_agent_data)
-        print("*****************************************")
+        converted_agent_data = await do_agent_func(query)
+        converted_agent_data = json.loads(
+            json.dumps(converted_agent_data, default=str))
 
-        converted_agent_data_test = "Hello! I'm Yusuke. How are you today?"
+        return {
+            "result": [
+                {"data": converted_agent_data},
+            ]
+        }
 
         # AOAIにerrorが存在するかどうか判定させる処理
         aoai_client = AzureOpenAI(
@@ -76,7 +77,7 @@ async def root(query: str):
         messages.append(
             {"role": "system", "content": STR_AI_SYSTEMMESSAGE})
         messages.append(
-            {"role": "user", "content": converted_agent_data_test})
+            {"role": "user", "content": converted_agent_data})
 
         response = azure_openai_service.getChatCompletionJsonStructuredMode(
             messages, 0, 0, DocumentStructure)
@@ -139,6 +140,6 @@ async def do_agent_func(query: str):
         ),
         browser=browser,
     )
-    # result = await agent.run(max_steps=10)
-    result = await agent.run()
+    result = await agent.run(max_steps=5)
+    # result = await agent.run()
     return result

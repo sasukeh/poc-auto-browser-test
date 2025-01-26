@@ -9,13 +9,20 @@ export class WebAppsRepository {
         // クエリをURLに付与
         const requestUrl = `${baseUrl}?query=${encodeURIComponent(query)}`;
 
+        console.log(
+          '🚀 ~ WebAppsRepository ~ returnnewPromise ~ requestUrl:',
+          requestUrl
+        );
         // POSTリクエストを送信（必要に応じて data を入れる）
         const res = await axios.post(requestUrl, {});
-        console.log('🚀 ~ WebAppsRepository ~ returnnewPromise ~ res:', res);
+        console.log(
+          '🚀 ~ WebAppsRepository ~ returnnewPromise ~ res:',
+          res.data
+        );
         resolve(res.data);
       } catch (error: any) {
         console.log(
-          '🚀 ~ file: openaiRepository.ts:29 ~ AzOpenaiRepository ~ returnnewPromise ~ error:',
+          '🚀 ~ file: openaiRepository.ts:29 ~ WebAppsRepository ~ returnnewPromise ~ error:',
           error
         );
         reject(error);

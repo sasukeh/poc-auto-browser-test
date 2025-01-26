@@ -11,47 +11,6 @@ const FormInput = () => {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
-  const testStart = async () => {
-    // Send message to the OpenAI
-    const url = '/api/functions';
-    const response = await fetch(`${url}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log('🚀 ~ createItem ~ response:', response);
-    const { result } = await response.json();
-    console.log('🚀 ~ createItem ~ result:', result);
-  };
-
-  const createItem = async () => {
-    // Send message to the OpenAI
-    const url = '/api/cosmos/create';
-    const response = await fetch(`${url}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log('🚀 ~ createItem ~ response:', response);
-    const { result } = await response.json();
-    console.log('🚀 ~ createItem ~ result:', result);
-  };
-
-  const selectItem = async () => {
-    const url = '/api/cosmos/select';
-    const response = await fetch(`${url}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log('🚀 ~ selectItem ~ response:', response);
-    const { result } = await response.json();
-    console.log('🚀 ~ createItem ~ result:', result);
-  };
-
   const sendMessage = async () => {
     setIsLoading(true);
     // Send human message to the redux store
@@ -98,6 +57,13 @@ const FormInput = () => {
 
     setMessage('');
     setIsLoading(false);
+    dispatch(
+      inputMessageToReduxStore({
+        pathname,
+        message: 'test is done',
+        isMan: false,
+      })
+    );
   };
 
   return (
@@ -114,24 +80,6 @@ const FormInput = () => {
           className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
           placeholder="テストを実行したいブラウザのURLと、実行したいテストの項目を入力してください。"
         ></textarea>
-        {/* <button
-          onClick={testStart}
-          className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
-        >
-          func access
-        </button>
-        <button
-          onClick={selectItem}
-          className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
-        >
-          select Item
-        </button>
-        <button
-          onClick={createItem}
-          className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
-        >
-          create Item
-        </button> */}
         <button
           onClick={sendMessage}
           className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
@@ -151,7 +99,6 @@ const FormInput = () => {
               <div className="animate-spin w-5 h-5 border-4 border-blue-500 rounded-full border-t-transparent"></div>
             </div>
           )}
-
           <span className="sr-only">Send message</span>
         </button>
       </div>
