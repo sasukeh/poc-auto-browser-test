@@ -342,8 +342,8 @@
           "version": "2024-11-20"
         },
         "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
-        "currentCapacity": 100,
-        "raiPolicyName": "Microsoft.DefaultV2"
+        "currentCapacity": 100
+        // "raiPolicyName": "Microsoft.DefaultV2"
       }
     },
     {
