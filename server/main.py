@@ -1,9 +1,8 @@
-import logging
 import os
 import json
 from dotenv import load_dotenv
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from asyncio.log import logger
@@ -27,10 +26,6 @@ AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT')
 AZURE_OPENAI_API_KEY = os.getenv('AZURE_OPENAI_API_KEY')
 AZURE_OPENAI_DEPLOYMENT_ID = os.getenv('AZURE_OPENAI_DEPLOYMENT_ID')
 
-# tracer を取得
-tracer = trace.get_tracer(__name__)
-
-
 # FastAPIのインスタンス作成
 app = FastAPI()
 
@@ -49,18 +44,12 @@ STR_AI_SYSTEMMESSAGE = """
 
 @app.get("/")
 async def root():
-    print('************************************')
-    print('Hello World!! I am Yusuke in azure!!')
-    print('************************************')
     return {"message": "Hello World7"}
 
 
 @app.post("/agent")
 async def root(query: str):
     logger.info(f"query: {query}")
-    print('************************************')
-    print('Hello World!! I am agent in azure!!')
-    print('************************************')
     # 現在の日時を取得
     now = datetime.now()
     # 文字列に変換
@@ -92,6 +81,7 @@ async def root(query: str):
         doc_structured = response.choices[0].message.parsed
 
         converted_data = json.loads(json.dumps(doc_structured, default=str))
+
         # CosmosDBに登録するアイテムのオブジェクト
         cosmos_service = CosmosService()
         cosmos_page_obj = CosmosPageObj(

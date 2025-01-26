@@ -27,6 +27,17 @@ const QueryResultTable = ({ data }: { data: any }) => {
         </thead>
         <tbody>
           {data.map((item: any, index: number) => {
+            function extractContent(input: string): string {
+              // content='...' のパターンを正規表現でキャプチャ
+              const match = input.match(/content='([^']*)'/);
+
+              // マッチしていればキャプチャした文字列を返す、そうでなければ元の文字列を返す
+              if (match && match[1]) {
+                return match[1];
+              } else {
+                return input;
+              }
+            }
             return (
               <tr key={item.id} className="bg-white border-b ">
                 <th
@@ -36,7 +47,7 @@ const QueryResultTable = ({ data }: { data: any }) => {
                   {index + 1}
                 </th>
                 <td className="px-6 py-4">{item.query}</td>
-                <td className="px-6 py-4">{item.result}</td>
+                <td className="px-6 py-4">{extractContent(item.result)}</td>
                 <td className="px-6 py-4">
                   {item.isError ? (
                     <FcHighPriority size={30} />

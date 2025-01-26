@@ -20,7 +20,7 @@ class CosmosPageObj:
             "query": self.query,
             "result": self.result,
             "isError": self.isError,
-            "dueDate": self.dueDate
+            "dueDate": self.dueDate,
         }
 
     @staticmethod
@@ -29,7 +29,7 @@ class CosmosPageObj:
                              dict["query"],
                              dict["result"],
                              dict["isError"],
-                             dict["dueDate"])
+                             dict["dueDate"],)
 
     def __str__(self):
         return f'id: {self.id}, query: {self.query}, result: {self.result}, isError: {self.isError}, dueDate: {self.dueDate}'
