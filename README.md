@@ -11,8 +11,6 @@ Agent が自動でブラウザテストを実施するためのリポジトリ�
   - Next.js を Azure Static Web Apps で hosting
 - server
   - python の FastAPI 上で brower-use を使用し、Azure Web Apps で hosting
-- backend
-  - Azure Functions(工事中)
 
 ## Architecture
 

@@ -1,9 +1,11 @@
-import asyncio
+import logging
 import os
 import json
 from dotenv import load_dotenv
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from azure.monitor.opentelemetry import configure_azure_monitor
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from asyncio.log import logger
 
 from service.cosmos_service import CosmosService
@@ -19,15 +21,18 @@ from domain.document_structure import DocumentStructure
 
 from datetime import datetime
 
-
-# FastAPIのインスタンス作成
-app = FastAPI()
-
 # .env ファイルの読み込み
 load_dotenv()
 AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT')
 AZURE_OPENAI_API_KEY = os.getenv('AZURE_OPENAI_API_KEY')
 AZURE_OPENAI_DEPLOYMENT_ID = os.getenv('AZURE_OPENAI_DEPLOYMENT_ID')
+
+# tracer を取得
+tracer = trace.get_tracer(__name__)
+
+
+# FastAPIのインスタンス作成
+app = FastAPI()
 
 # system message
 STR_AI_SYSTEMMESSAGE = """
@@ -35,6 +40,7 @@ STR_AI_SYSTEMMESSAGE = """
 - 画像内の情報を、Markdown形式に整理しなさい。
 - 回答形式 以外の内容は記載しないでください。
 - 回答の最初に「```json」を含めないこと。
+- 検索の過程でどのような処理をしたか含めること
 
 ##回答形式##
 処理の内容を３行に要約
@@ -43,27 +49,28 @@ STR_AI_SYSTEMMESSAGE = """
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World5"}
+    print('************************************')
+    print('Hello World!! I am Yusuke in azure!!')
+    print('************************************')
+    return {"message": "Hello World7"}
 
 
 @app.post("/agent")
 async def root(query: str):
     logger.info(f"query: {query}")
+    print('************************************')
+    print('Hello World!! I am agent in azure!!')
+    print('************************************')
     # 現在の日時を取得
     now = datetime.now()
     # 文字列に変換
     current_time_str = now.strftime("%Y-%m-%d-%H-%M-%S")
     try:
         # Agentの処理を実行
-        converted_agent_data = await do_agent_func(query)
-        converted_agent_data = json.loads(
-            json.dumps(converted_agent_data, default=str))
+        result = await do_agent_func(query)
 
-        return {
-            "result": [
-                {"data": converted_agent_data},
-            ]
-        }
+        converted_agent_data = json.loads(
+            json.dumps(result, default=str))
 
         # AOAIにerrorが存在するかどうか判定させる処理
         aoai_client = AzureOpenAI(
@@ -116,7 +123,7 @@ async def root(query: str):
         cosmos_service.insert_data(cosmos_page_obj.to_dict())
         return {
             "result": [
-                {"data": converted_data},
+                {"data": e},
             ]
         }
 
@@ -140,6 +147,12 @@ async def do_agent_func(query: str):
         ),
         browser=browser,
     )
-    result = await agent.run(max_steps=5)
-    # result = await agent.run()
-    return result
+
+    try:
+        result = await agent.run(max_steps=5)
+        # result = await agent.run()
+        return result
+    except Exception as e:
+        print(f"Error: {e}")
+        result = str(e)
+        return result
