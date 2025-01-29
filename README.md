@@ -14,7 +14,7 @@ Agent が自動でブラウザテストを実施するためのリポジトリ�
 
 ## Architecture
 
-![](https://storage.googleapis.com/zenn-user-upload/e7ec2f642a4d-20250112.png)
+![](https://storage.googleapis.com/zenn-user-upload/09a17db8f880-20250129.png)
 
 ## 動作
 
