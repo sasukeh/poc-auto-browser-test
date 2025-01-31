@@ -1,5 +1,11 @@
 import os
 from dotenv import load_dotenv
+import uvicorn
+from asyncio.log import logger
+
+from langchain_openai import AzureChatOpenAI
+from browser_use import Agent # type: ignore
+from browser_use.browser.browser import Browser, BrowserConfig # type: ignore
 
 from fastapi import FastAPI, Form, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -13,11 +19,6 @@ from langchain_openai import AzureChatOpenAI
 from browser_use import Agent # type: ignore
 from browser_use.browser.browser import Browser, BrowserConfig # type: ignore
 
-import os
-import json
-from dotenv import load_dotenv
-
-from fastapi import FastAPI
 from asyncio.log import logger
 
 from service.cosmos_service import CosmosService
