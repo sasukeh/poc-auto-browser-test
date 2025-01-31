@@ -60,7 +60,8 @@ const FormInput = () => {
     dispatch(
       inputMessageToReduxStore({
         pathname,
-        message: 'test is done',
+        message:
+          '🤖Agentの作業が完了しました🤖 結果はTest Resultをご確認ください。',
         isMan: false,
       })
     );
@@ -69,7 +70,7 @@ const FormInput = () => {
   return (
     <div className="w-full justify-center items-center">
       <label htmlFor="chat" className="sr-only">
-        テストを実行したいブラウザのURLと、実行したいテストの項目を入力してください。
+        AI Agentに実行してほしい作業をお伝えください。
       </label>
       <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50">
         <textarea
@@ -78,7 +79,7 @@ const FormInput = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-          placeholder="テストを実行したいブラウザのURLと、実行したいテストの項目を入力してください。"
+          placeholder="AI Agentに実行してほしい作業をお伝えください。"
         ></textarea>
         <button
           onClick={sendMessage}
